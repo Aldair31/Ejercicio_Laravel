@@ -10,17 +10,18 @@ class UserController extends Controller
     //
     function register(Request $request){
         User :: Create([
-            'id'=>$request->id,
+            'codigo'=> $request->codigo,
             'name' => $request->name,
             'email'=> $request->email,
             'photo'=> $request->photo,
-            // 'current'=> true
+
+            'current'=> true
         ]);
         // print($request);
         // echo 'HOLA';
         info('HOLA MUNDO');
-        $out = new \Symfony\Component\Console\Output\ConsoleOutput();
-        $out->writeln("Hello from Terminal");
+        // $out = new \Symfony\Component\Console\Output\ConsoleOutput();
+        // $out->writeln("Hello from Terminal");
         return response() -> json([
             'message'=>'Successfully created user!'
         ], 201);
