@@ -9,21 +9,18 @@ class UserController extends Controller
 {
     //
     function register(Request $request){
-        User :: Create([
+        $user=User :: Create([
             'codigo'=> $request->codigo,
             'name' => $request->name,
             'email'=> $request->email,
             'photo'=> $request->photo,
-
             'current'=> true
         ]);
-        // print($request);
-        // echo 'HOLA';
         info('HOLA MUNDO');
-        // $out = new \Symfony\Component\Console\Output\ConsoleOutput();
-        // $out->writeln("Hello from Terminal");
+        $token = $user->createToken('my-app-token')->plainTextToken;
         return response() -> json([
-            'message'=>'Successfully created user!'
+            'message'=>'Successfully created user!',
+            'token'=>$token
         ], 201);
     }
 }

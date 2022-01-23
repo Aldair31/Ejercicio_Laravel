@@ -9,5 +9,14 @@ class Theme extends Model
 {
     use HasFactory;
     public $timestamps= false;
+    protected $fillable = [
+        'codigo',
+        'name',
+        'keywords',
+        'description',
+        'current',
+        // 'current',
+    ];
+
 
 }
