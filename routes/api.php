@@ -19,4 +19,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::post('register',[UserController::class, 'register']);
-Route::post('create',[ThemeController::class,'create']);
+//Themes 
+Route::post('createTheme',[ThemeController::class,'createTheme']);
+Route::get('listTheme',[ThemeController::class,'listTheme']);
+Route::get('searchTheme/{name?}',[ThemeController::class,'searchTheme']);
+Route::put('editTheme/{id?}',[ThemeController::class,'editTheme']);
+Route::delete('deleteTheme/{id?}', [ThemeController::class,'deleteTheme']);
