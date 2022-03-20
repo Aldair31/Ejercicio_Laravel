@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PersonaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -25,3 +26,8 @@ Route::get('listTheme',[ThemeController::class,'listTheme']);
 Route::get('searchTheme/{name?}',[ThemeController::class,'searchTheme']);
 Route::put('editTheme/{id?}',[ThemeController::class,'editTheme']);
 Route::delete('deleteTheme/{id?}', [ThemeController::class,'deleteTheme']);
+
+//RUTAS DE PERSONA
+Route::controller(PersonaController::class)->group(function(){
+    Route::post('/Persona/nuevaPersona', 'CrearPersona');
+});
