@@ -5,12 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Pais extends Model
+class Tema extends Model
 {
     use HasFactory;
-
+    public $timestamps= false;
     protected $fillable = [
         'Codigo',
         'Nombre',
+        'PalabrasClave',
+        'Descripcion',
+        'Vigencia',
+        'CodigoUsuario',
     ];
 }

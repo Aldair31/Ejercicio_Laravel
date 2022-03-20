@@ -5,12 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Pais extends Model
+class Evento extends Model
 {
     use HasFactory;
-
+    public $timestamps= false;
     protected $fillable = [
         'Codigo',
-        'Nombre',
+        'Titulo',
+        'Descripcion',
+        'Fecha',
+        'Imagen',
+        'URL',
+        'Vigencia',
+        'CodigoLineaTiempo',
     ];
 }
