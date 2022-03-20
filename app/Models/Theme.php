@@ -10,7 +10,7 @@ class Theme extends Model
     use HasFactory;
     public $timestamps= false;
     protected $fillable = [
-        'codigo',
+        'id',
         'name',
         'keywords',
         'description',
