@@ -5,18 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Theme extends Model
+class Persona extends Model
 {
     use HasFactory;
     public $timestamps= false;
     protected $fillable = [
-        'id',
-        'name',
-        'keywords',
-        'description',
-        'current',
-        // 'current',
+        'Codigo',
+        'Nombre',
+        'Apellidos',
+        'FechaNacimiento',
+        'Sexo',
+        'Correo',
+        'Foto',
+        'Vigencia',
+        'CodigoPais',
     ];
-
-
 }
