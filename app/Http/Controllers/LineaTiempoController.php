@@ -145,7 +145,14 @@ class LineaTiempoController extends Controller
     }
 
     function BuscarLineas($Palabra){
-        return LineaTiempo::where('PalabrasClave', 'LIKE', "%$Palabra%")
-            ->orWhere('Nombre', 'LIKE', "%$Palabra%")->get();
+        $BuscarLinea=LineaTiempo::where('Estado', 3)
+        ->where('Vista', 2)
+        ->where(function($Lineas) use ($Palabra){
+            $Lineas->where('Nombre', 'LIKE', "%$Palabra%")
+            ->orWhere('PalabrasClave', 'LIKE', "%$Palabra%");
+        })
+        ->get();
+
+        return $BuscarLinea;
     }
 }
