@@ -9,6 +9,7 @@ class Tema extends Model
 {
     use HasFactory;
     public $timestamps= false;
+    protected $table = 'temas';
     protected $fillable = [
         'Codigo',
         'Nombre',

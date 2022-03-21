@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Pais extends Model
 {
     use HasFactory;
-
+    public $timestamps = false;
+    protected $table = 'pais';
     protected $fillable = [
         'Codigo',
         'Nombre',

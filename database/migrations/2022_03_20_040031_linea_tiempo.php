@@ -19,6 +19,7 @@ class LineaTiempo extends Migration
             $table->string('PalabrasClave');
             $table->string('Descripcion');
             $table->integer('Estado');
+            $table->integer('Vista');
             $table->unsignedBigInteger('CodigoTema');
             $table->foreign('CodigoTema')->references('Codigo')->on('Temas');
         });

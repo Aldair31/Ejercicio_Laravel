@@ -9,12 +9,14 @@ class LineaTiempo extends Model
 {
     use HasFactory;
     public $timestamps= false;
+    protected $table = 'lineatiempos';
     protected $fillable = [
         'Codigo',
         'Nombre',
         'PalabrasClave',
         'Descripcion',
         'Estado',
+        'Vista',
         'CodigoTema',
     ];
 }

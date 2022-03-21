@@ -1,10 +1,15 @@
 <?php
 
-use App\Http\Controllers\PersonaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ThemeController;
+
+use App\Http\Controllers\PersonaController;
+use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\TemaController;
+use App\Http\Controllers\LineaTiempoController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -29,5 +34,38 @@ Route::delete('deleteTheme/{id?}', [ThemeController::class,'deleteTheme']);
 
 //RUTAS DE PERSONA
 Route::controller(PersonaController::class)->group(function(){
-    Route::post('/Persona/nuevaPersona', 'CrearPersona');
+    Route::post('/Persona/CrearPersona', 'CrearPersona');
+    Route::put('/Persona/ActualizarPersona/{Codigo}', 'ActualizarPersona');
+    Route::put('/Persona/DarDeBaja/{Codigo}', 'DarDeBaja');
+    Route::get('/Persona/ListarPersonas', 'ListarPersonas');
+    Route::get('/Persona/BuscarPersona/{Codigo}', 'BuscarPersona');
+});
+
+//RUTAS DE USUARIO
+Route::controller(UsuarioController::class)->group(function(){
+    Route::post('/Usuario/CrearUsuario', 'CrearUsuario');
+    Route::put('/Usuario/ActualizarUsuario/{Codigo}', 'ActualizarUsuario');
+    Route::put('/Usuario/DarDeBaja/{Codigo}', 'DarDeBaja');
+    Route::get('/Usuario/ListarUsuarios', 'ListarUsuarios');
+    Route::get('/Usuario/BuscarUsuario/{Codigo}', 'BuscarUsuario');
+});
+
+//RUTAS DE TEMA
+Route::controller(TemaController::class)->group(function(){
+    Route::post('/Tema/CrearTema', 'CrearTema');
+    Route::put('/Tema/ActualizarTema/{Codigo}', 'ActualizarTema');
+    Route::put('/Tema/DarDeBaja/{Codigo}', 'DarDeBaja');
+    Route::get('/Tema/ListarTemasUsuario/{CodigoUsuario}', 'ListarTemasUsuario');
+    Route::get('/Tema/BuscarTema/{Codigo}', 'BuscarTema');
+});
+
+//RUTAS DE LINEA DE TIEMPO
+Route::controller(LineaTiempoController::class)->group(function(){
+    Route::post('/LineaTiempo/CrearLineaTiempo', 'CrearLineaTiempo');
+    Route::put('/LineaTiempo/ActualizarLineaTiempo/{Codigo}', 'ActualizarLineaTiempo');
+    Route::put('/LineaTiempo/ModificarEstado/{Codigo}', 'ModificarEstado');
+    Route::put('/LineaTiempo/ModificarVista/{Codigo}', 'ModificarVista');
+    Route::get('/LineaTiempo/ListarLineasTema/{CodigoUsuario}', 'ListarLineasTema');
+    Route::get('/LineaTiempo/BuscarLineas/{Palabra}', 'BuscarLineas');
+    // Route::get('/LineaTiempo/BuscarTema/{Codigo}', 'BuscarTema');
 });
