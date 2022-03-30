@@ -16,7 +16,7 @@ class Usuario extends Migration
         Schema::create('Usuarios', function(Blueprint $table){
             $table->bigIncrements('Codigo');
             $table->string('NombreUsuario', 40);
-            $table->integer('Vigencia');
+            $table->char('Vigencia', 1); //A: Activo, B: Baja
             $table->unsignedBigInteger('CodigoPersona');
             $table->foreign('CodigoPersona')->references('Codigo')->on('Personas');
         });

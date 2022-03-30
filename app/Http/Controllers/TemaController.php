@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Tema;
 use App\Models\Usuario;
+use App\Models\LineaTiempo;
 
 class TemaController extends Controller
 {
@@ -15,7 +16,7 @@ class TemaController extends Controller
 
         if(!$NombreTema){
             if(Usuario::find($request->CodigoUsuario)){
-                Tema::Create([
+                $Tema = Tema::Create([
                     'Nombre' => $request->Nombre,
                     'PalabrasClave' => $request->PalabrasClave,
                     'Descripcion' => $request->Descripcion,
@@ -26,6 +27,7 @@ class TemaController extends Controller
                 return response() -> json([
                     'ok' => true,
                     'message' => 'Tema creado correctamente',
+                    'Codigo' => $Tema->Codigo
                 ]);
             } else{
                 return response() -> json([
@@ -45,7 +47,7 @@ class TemaController extends Controller
         $Tema = Tema::find($Codigo);
 
         if($Tema){
-            if($Tema->Vigencia==1){
+            if($Tema->Vigencia=='A'){
                 if($request->Nombre){
                     $NombreTema = Tema::select('Nombre')
                         ->where('CodigoUsuario', $Tema->CodigoUsuario)
@@ -87,10 +89,13 @@ class TemaController extends Controller
         $Tema = Tema::find($Codigo);
 
         if($Tema){
-            if($Tema->Vigencia == 1){
-                $Tema->Vigencia = 2;
+            if($Tema->Vigencia == 'A'){
+                $Tema->Vigencia = 'B';
 
                 $Tema->save();
+
+                LineaTiempo::where('CodigoTema', $Tema->Codigo)
+                    ->update(['Estado' => 'B']);
 
                 return response() -> json([
                     'ok' => true,
@@ -111,7 +116,9 @@ class TemaController extends Controller
     }
 
     function ListarTemasUsuario($CodigoUsuario){
-        $Temas = Tema::where('CodigoUsuario', $CodigoUsuario)->get();
+        $Temas = Tema::where('CodigoUsuario', $CodigoUsuario)
+            ->where('Vigencia', 'A')
+            ->get();
 
         return response() -> json($Temas);
     }
@@ -120,7 +127,7 @@ class TemaController extends Controller
         $Tema = Tema::find($Codigo);
 
         if($Tema){
-            if($Tema->Vigencia==1){
+            if($Tema->Vigencia=='A'){
                 return response() -> json($Tema);
             } else{
                 return response() -> json([

@@ -5,26 +5,35 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Persona;
 use App\Models\Pais;
+use App\Models\Usuario;
+use Illuminate\Http\Response;
 
 class PersonaController extends Controller
 {
     function CrearPersona(Request $request){
-        $correo = Persona::select('Correo')->where('Correo', $request->Correo)->first();
-        if(!$correo){
-            Persona::Create([
+        $PersonaCreada = Persona::where('Correo', $request->Correo)->first();
+        if(!$PersonaCreada){
+            $Persona = Persona::Create([
+                'Nombre' => $request->Nombre,
+                'Apellidos' => $request->Apellidos,
                 'Correo' => $request->Correo,
                 'Foto' => $request->Foto,
                 'Vigencia' => $request->Vigencia,
             ]);
-    
+
+            // $PersonaCreada = Persona::where('Correo', $request->Correo)->first();
+            // $Persona->save();
+
             return response() -> json([
                 'ok'=> true,
                 'message' => 'La persona ha sido creado correctamente',
+                'codigo' => $Persona->Codigo
             ], 201);
         } else {
             return response() -> json([
                 'ok'=> false,
                 'message' => 'Persona Logeado',
+                'codigo' => $PersonaCreada->Codigo
             ], 201);
         }
     }
@@ -33,7 +42,7 @@ class PersonaController extends Controller
         $Persona = Persona::find($Codigo); 
 
         if($Persona){
-            if($Persona->Vigencia==1){
+            if($Persona->Vigencia=='A'){
                 $request->Nombre ? $Persona->Nombre = $request->Nombre : null;
                 $request->Apellidos ? $Persona->Apellidos = $request->Apellidos : null;
                 $request->FechaNacimiento ? $Persona->FechaNacimiento = $request->FechaNacimiento : null;
@@ -73,10 +82,13 @@ class PersonaController extends Controller
         $Persona = Persona::find($Codigo);
         
         if($Persona){
-            if($Persona->Vigencia==1){
-                $Persona->Vigencia = 2;
+            if($Persona->Vigencia=='A'){
+                $Persona->Vigencia = 'B';
 
                 $Persona->save();
+
+                Usuario::where('CodigoPersona', $Persona->Codigo)
+                    ->update(['Vigencia' => 'B']);
 
                 return response() -> json([
                     'ok' => true,
@@ -104,7 +116,7 @@ class PersonaController extends Controller
         $Persona = Persona::find($Codigo);
 
         if($Persona){
-            if($Persona->Vigencia==1){
+            if($Persona->Vigencia=='A'){
                 return response() -> json($Persona);
             } else{
                 return response() -> json([

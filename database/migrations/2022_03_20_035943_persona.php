@@ -18,10 +18,10 @@ class Persona extends Migration
             $table->string('Nombre', 40)->nullable();;
             $table->string('Apellidos', 40)->nullable();;
             $table->date('FechaNacimiento')->nullable();;
-            $table->integer('Sexo')->nullable();;
+            $table->char('Sexo', 1)->nullable();;
             $table->string('Correo', 100);
             $table->string('Foto');
-            $table->integer('Vigencia');
+            $table->char('Vigencia', 1); //A: Activo, B: Baja
             $table->unsignedBigInteger('CodigoPais')->nullable();;
             $table->foreign('CodigoPais')->references('Codigo')->on('Pais');
         });

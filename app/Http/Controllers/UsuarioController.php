@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Usuario;
 use App\Models\Persona;
+use App\Models\Tema;
 
 class UsuarioController extends Controller
 {
@@ -13,7 +14,7 @@ class UsuarioController extends Controller
 
         if(!$NombreUsuario){
             if(Persona::find($request->CodigoPersona)){
-                Usuario::Create([
+                $Usuario = Usuario::Create([
                     'NombreUsuario' => $request->NombreUsuario,
                     'Vigencia' => $request->Vigencia,
                     'CodigoPersona' => $request->CodigoPersona,
@@ -22,18 +23,19 @@ class UsuarioController extends Controller
                 return response() -> json([
                     'ok' => true,
                     'message' => 'Usuario creado correctamente',
+                    'Codigo' => $Usuario->Codigo
                 ]);
             } else{
                 return response() -> json([
                     'ok' => false,
-                    'message' => 'El código de Persona, no existe'
+                    'message' => 'El código de Persona, no existe',
+                    'Codigo' => $NombreUsuario->Codigo
                 ]);
             }
         } else{
             return response() -> json([
                 'ok' => false,
                 'message' => 'El nombre de usuario ya existe',
-                'NombreUsuario' => $NombreUsuario
             ]);
         }
     }
@@ -42,7 +44,7 @@ class UsuarioController extends Controller
         $Usuario = Usuario::find($Codigo);
 
         if($Usuario){
-            if($Usuario->Vigencia==1){
+            if($Usuario->Vigencia=='A'){
                 $NombreUsuario = Usuario::select('NombreUsuario')->where('NombreUsuario', $request->NombreUsuario)->first();
                 if(!$NombreUsuario){
                     $Usuario->NombreUsuario = $request->NombreUsuario;
@@ -77,10 +79,13 @@ class UsuarioController extends Controller
         $Usuario = Usuario::find($Codigo);
 
         if($Usuario){
-            if($Usuario->Vigencia==1){
-                $Usuario->Vigencia = 2;
+            if($Usuario->Vigencia=='A'){
+                $Usuario->Vigencia = 'B';
 
                 $Usuario->save();
+
+                Tema::where('CodigoUsuario', $Usuario->Codigo)
+                    ->update(['Vigencia' => 'B']);
 
                 return response() -> json([
                     'ok' => true,
@@ -108,7 +113,7 @@ class UsuarioController extends Controller
         $Usuario = Usuario::find($Codigo);
 
         if($Usuario){
-            if($Usuario->Vigencia==1){
+            if($Usuario->Vigencia=='A'){
                 // return response() -> json([
                 //     'ok' => true,
                 //     'Usuario' => $Usuario,
@@ -124,6 +129,21 @@ class UsuarioController extends Controller
             return response() -> json([
                 'ok' => false,
                 'message' => 'El código de Usuario, no existe'
+            ]);
+        }
+    }
+
+    function BuscarUsuarioCodigoPersona($CodigoPersona){
+        $Usuario = Usuario::where('CodigoPersona', $CodigoPersona)
+            ->where('Vigencia', 'A')
+            ->first();
+
+        if($Usuario){
+            return response() -> json($Usuario);
+        } else{
+            return response() -> json([
+                'ok' => false,
+                'message' => 'Usuario no existe con dicho código de Persona'
             ]);
         }
     }

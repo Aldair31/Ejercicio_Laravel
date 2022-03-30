@@ -15,11 +15,11 @@ class LineaTiempoController extends Controller
 
         if(!$NombreLinea){
             if(Tema::find($request->CodigoTema)){
-                LineaTiempo::Create([
+                $LineaTiempo = LineaTiempo::Create([
                     'Nombre' => $request->Nombre,
                     'PalabrasClave' => $request->PalabrasClave,
                     'Descripcion' => $request->Descripcion,
-                    'Estado' => $request->Estado,
+                    'Estado' => $request->Estado, //D: Desarrollo, B: Dado de Baja, F: Finalizado
                     'Vista' => $request->Vista,
                     'CodigoTema' => $request->CodigoTema,
                 ]);
@@ -27,6 +27,7 @@ class LineaTiempoController extends Controller
                 return response() -> json([
                     'ok' => true,
                     'message' => 'Línea de Tiempo creada correctamente',
+                    'Codigo' => $LineaTiempo->Codigo
                 ]);
             } else{
                 return response() -> json([
@@ -46,7 +47,7 @@ class LineaTiempoController extends Controller
         $LineaTiempo = LineaTiempo::find($Codigo);
 
         if($LineaTiempo){
-            if($LineaTiempo->Estado!=2){ //Estado = 2, es 'Dado de Baja'
+            if($LineaTiempo->Estado!='B'){ //Estado = 2, es 'Dado de Baja'
                 if($request->Nombre){
                     $NombreLinea = LineaTiempo::select('Nombre')
                         ->where('CodigoTema', $LineaTiempo->CodigoTema)
@@ -139,14 +140,16 @@ class LineaTiempoController extends Controller
     }
 
     function ListarLineasTema($CodigoTema){
-        $Lineas = LineaTiempo::where('CodigoTema', $CodigoTema)->get();
+        $Lineas = LineaTiempo::where('CodigoTema', $CodigoTema)
+            ->where('Estado', '!=', 'B')
+            ->get();
 
         return response() -> json($Lineas);
     }
 
     function BuscarLineas($Palabra){
-        $BuscarLinea=LineaTiempo::where('Estado', 3)
-        ->where('Vista', 2)
+        $BuscarLinea=LineaTiempo::where('Estado', 'F')
+        ->where('Vista', 'O')
         ->where(function($Lineas) use ($Palabra){
             $Lineas->where('Nombre', 'LIKE', "%$Palabra%")
             ->orWhere('PalabrasClave', 'LIKE', "%$Palabra%");

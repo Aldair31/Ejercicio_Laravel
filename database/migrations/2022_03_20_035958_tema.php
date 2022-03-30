@@ -18,7 +18,7 @@ class Tema extends Migration
             $table->string('Nombre', 60);
             $table->string('PalabrasClave');
             $table->string('Descripcion');
-            $table->integer('Vigencia');
+            $table->char('Vigencia', 1); //A: Activo, B: Baja
             $table->unsignedBigInteger('CodigoUsuario');
             $table->foreign('CodigoUsuario')->references('Codigo')->on('Usuarios');
         });

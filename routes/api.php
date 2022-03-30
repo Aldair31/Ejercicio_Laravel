@@ -5,10 +5,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ThemeController;
 
+use App\Http\Controllers\PaisController;
 use App\Http\Controllers\PersonaController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\TemaController;
 use App\Http\Controllers\LineaTiempoController;
+use App\Http\Controllers\EventoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +34,11 @@ Route::get('searchTheme/{name?}',[ThemeController::class,'searchTheme']);
 Route::put('editTheme/{id?}',[ThemeController::class,'editTheme']);
 Route::delete('deleteTheme/{id?}', [ThemeController::class,'deleteTheme']);
 
+//RUTAS DE PAIS
+Route::controller(PaisController::class)->group(function(){
+    Route::get('/Pais/ListarNombrePaises', 'ListarNombrePaises');
+});
+
 //RUTAS DE PERSONA
 Route::controller(PersonaController::class)->group(function(){
     Route::post('/Persona/CrearPersona', 'CrearPersona');
@@ -47,7 +54,8 @@ Route::controller(UsuarioController::class)->group(function(){
     Route::put('/Usuario/ActualizarUsuario/{Codigo}', 'ActualizarUsuario');
     Route::put('/Usuario/DarDeBaja/{Codigo}', 'DarDeBaja');
     Route::get('/Usuario/ListarUsuarios', 'ListarUsuarios');
-    Route::get('/Usuario/BuscarUsuario/{Codigo}', 'BuscarUsuario');
+    Route::get('/Usuario/BuscarUsuario/{Codigo}', 'BuscarUsuario'); //BuscarUsuarioCodigoPersona
+    Route::get('/Usuario/BuscarUsuarioCodigoPersona/{CodigoPersona}', 'BuscarUsuarioCodigoPersona');
 });
 
 //RUTAS DE TEMA
@@ -68,4 +76,13 @@ Route::controller(LineaTiempoController::class)->group(function(){
     Route::get('/LineaTiempo/ListarLineasTema/{CodigoUsuario}', 'ListarLineasTema');
     Route::get('/LineaTiempo/BuscarLineas/{Palabra}', 'BuscarLineas');
     // Route::get('/LineaTiempo/BuscarTema/{Codigo}', 'BuscarTema');
+});
+
+//RUTAS DE EVENTO
+Route::controller(EventoController::class)->group(function(){
+    Route::post('/Evento/CrearEvento', 'CrearEvento');
+    Route::put('/Evento/ActualizarEvento/{Codigo}', 'ActualizarEvento');
+    Route::put('/Evento/DarDeBaja/{Codigo}', 'DarDeBaja');
+    Route::get('/Evento/ListarEventos', 'ListarEventos');
+    Route::get('/Evento/ListarEventosLinea/{CodigoLinea}', 'ListarEventosLinea');
 });

@@ -20,7 +20,7 @@ class Evento extends Migration
             $table->date('Fecha');
             $table->string('Imagen');
             $table->string('URL');
-            $table->integer('Vigencia');
+            $table->char('Vigencia', 1); //A: Activo, B: Baja
             $table->unsignedBigInteger('CodigoLineaTiempo');
             $table->foreign('CodigoLineaTiempo')->references('Codigo')->on('LineaTiempos');
         });
