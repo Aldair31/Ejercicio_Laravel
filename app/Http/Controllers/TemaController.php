@@ -6,22 +6,23 @@ use Illuminate\Http\Request;
 use App\Models\Tema;
 use App\Models\Usuario;
 use App\Models\LineaTiempo;
+use App\Models\Persona;
 
 class TemaController extends Controller
 {
     function CrearTema(Request $request){
         $NombreTema = Tema::select('Nombre')
-            ->where('CodigoUsuario', $request->CodigoUsuario)
+            ->where('CodigoPersona', $request->CodigoPersona)
             ->where('Nombre', $request->Nombre)->first();
 
         if(!$NombreTema){
-            if(Usuario::find($request->CodigoUsuario)){
+            if(Persona::find($request->CodigoPersona)){
                 $Tema = Tema::Create([
                     'Nombre' => $request->Nombre,
                     'PalabrasClave' => $request->PalabrasClave,
                     'Descripcion' => $request->Descripcion,
                     'Vigencia' => $request->Vigencia,
-                    'CodigoUsuario' => $request->CodigoUsuario,
+                    'CodigoPersona' => $request->CodigoPersona,
                 ]);
 
                 return response() -> json([
@@ -115,8 +116,8 @@ class TemaController extends Controller
         }
     }
 
-    function ListarTemasUsuario($CodigoUsuario){
-        $Temas = Tema::where('CodigoUsuario', $CodigoUsuario)
+    function ListarTemasUsuario($CodigoPersona){
+        $Temas = Tema::where('CodigoPersona', $CodigoPersona)
             ->where('Vigencia', 'A')
             ->get();
 

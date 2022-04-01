@@ -20,20 +20,18 @@ class PersonaController extends Controller
                 'Foto' => $request->Foto,
                 'Vigencia' => $request->Vigencia,
             ]);
-
             // $PersonaCreada = Persona::where('Correo', $request->Correo)->first();
             // $Persona->save();
-
             return response() -> json([
                 'ok'=> true,
                 'message' => 'La persona ha sido creado correctamente',
-                'codigo' => $Persona->Codigo
+                'codigo' => $Persona->Codigo,
             ], 201);
         } else {
             return response() -> json([
                 'ok'=> false,
                 'message' => 'Persona Logeado',
-                'codigo' => $PersonaCreada->Codigo
+                'codigo' => $PersonaCreada->Codigo,
             ], 201);
         }
     }
@@ -116,7 +114,7 @@ class PersonaController extends Controller
         $Persona = Persona::find($Codigo);
 
         if($Persona){
-            if($Persona->Vigencia=='A'){
+            if($Persona->Vigencia=="A"){
                 return response() -> json($Persona);
             } else{
                 return response() -> json([

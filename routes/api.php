@@ -63,7 +63,7 @@ Route::controller(TemaController::class)->group(function(){
     Route::post('/Tema/CrearTema', 'CrearTema');
     Route::put('/Tema/ActualizarTema/{Codigo}', 'ActualizarTema');
     Route::put('/Tema/DarDeBaja/{Codigo}', 'DarDeBaja');
-    Route::get('/Tema/ListarTemasUsuario/{CodigoUsuario}', 'ListarTemasUsuario');
+    Route::get('/Tema/ListarTemasUsuario/{CodigoPersona}', 'ListarTemasUsuario');
     Route::get('/Tema/BuscarTema/{Codigo}', 'BuscarTema');
 });
 
@@ -73,7 +73,7 @@ Route::controller(LineaTiempoController::class)->group(function(){
     Route::put('/LineaTiempo/ActualizarLineaTiempo/{Codigo}', 'ActualizarLineaTiempo');
     Route::put('/LineaTiempo/ModificarEstado/{Codigo}', 'ModificarEstado');
     Route::put('/LineaTiempo/ModificarVista/{Codigo}', 'ModificarVista');
-    Route::get('/LineaTiempo/ListarLineasTema/{CodigoUsuario}', 'ListarLineasTema');
+    Route::get('/LineaTiempo/ListarLineasTema/{CodigoTema}', 'ListarLineasTema');
     Route::get('/LineaTiempo/BuscarLineas/{Palabra}', 'BuscarLineas');
     // Route::get('/LineaTiempo/BuscarTema/{Codigo}', 'BuscarTema');
 });

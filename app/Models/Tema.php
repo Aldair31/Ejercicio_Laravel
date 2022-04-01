@@ -16,6 +16,6 @@ class Tema extends Model
         'PalabrasClave',
         'Descripcion',
         'Vigencia',
-        'CodigoUsuario',
+        'CodigoPersona',
     ];
 }
