@@ -142,6 +142,7 @@ class LineaTiempoController extends Controller
     function ListarLineasTema($CodigoTema){
         $Lineas = LineaTiempo::where('CodigoTema', $CodigoTema)
             ->where('Estado', '!=', 'B')
+            ->orderBy('Codigo', 'desc')
             ->get();
 
         return response() -> json($Lineas);

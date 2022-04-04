@@ -118,6 +118,7 @@ class TemaController extends Controller
     function ListarTemasUsuario($CodigoUsuario){
         $Temas = Tema::where('CodigoUsuario', $CodigoUsuario)
             ->where('Vigencia', 'A')
+            ->orderBy('Codigo', 'desc')
             ->get();
 
         return response() -> json($Temas);
