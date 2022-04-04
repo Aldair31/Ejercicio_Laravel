@@ -114,7 +114,7 @@ class PersonaController extends Controller
         $Persona = Persona::find($Codigo);
 
         if($Persona){
-            if($Persona->Vigencia=="A"){
+            if($Persona->Vigencia=='A'){
                 return response() -> json($Persona);
             } else{
                 return response() -> json([

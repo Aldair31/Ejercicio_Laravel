@@ -63,7 +63,7 @@ Route::controller(TemaController::class)->group(function(){
     Route::post('/Tema/CrearTema', 'CrearTema');
     Route::put('/Tema/ActualizarTema/{Codigo}', 'ActualizarTema');
     Route::put('/Tema/DarDeBaja/{Codigo}', 'DarDeBaja');
-    Route::get('/Tema/ListarTemasUsuario/{CodigoPersona}', 'ListarTemasUsuario');
+    Route::get('/Tema/ListarTemasUsuario/{CodigoUsuario}', 'ListarTemasUsuario');
     Route::get('/Tema/BuscarTema/{Codigo}', 'BuscarTema');
 });
 
